@@ -1,0 +1,17 @@
+h1 {
+    color: black;
+    text-align: center;
+}
+
+h2 {
+	text-align: center;
+}
+
+body {
+	/*background-color: lightGreen;*/
+}
+
+#myCanvas {
+	position: fixed;
+	background-color: LightGray;
+}
