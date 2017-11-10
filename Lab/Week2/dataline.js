@@ -4,7 +4,8 @@
 * Project: Line graph with Javascript
 *
 * "dataline.js"
-* This file .......
+* This file creates a graph depicting the daily maximum temperature 
+* in de Bilt, 2014
 **/
 
 // initialize width and height of graph
@@ -37,6 +38,9 @@ loadRawFile.open("GET", "rawdata.txt", true);
 loadRawFile.send();
 
 function writeGraph(data) {
+	// data is the rawdata containing maximum temperature values for each
+	// day in 2014 in de Bilt.
+	
 	for (var i = 1; i < 365; i++)
 	{
 		thisData = data.split("\n")[i];
@@ -48,8 +52,6 @@ function writeGraph(data) {
 		// transform dates to numbers 1 through 265
 		var dateString = date.slice(0,4) + "," + date.slice(4,6) + "," + date.slice(6,8)
 		date = new Date(dateString);
-		console.log(typeof date);
-		console.log(date);
 		date = (date.getTime() - 1388444400000) /  86400000;
 
 		// add date and temp to corresponding strings
@@ -82,7 +84,6 @@ function writeGraph(data) {
 	var transformX = createTransform(domainX, rangeX);
 	var transformY = createTransform(domainY, rangeY);
 
-	// hieronder heb ik allemaal van de tutorial. Bronvermelding?
 	// initialize 2D canvas element 
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext('2d');
@@ -132,6 +133,7 @@ function writeGraph(data) {
 		ctx.rotate(- ANGLE);
 	}
 
+	// iterate from 50 through 350 with steps of 50 
 	for (var i = 50; i < 350; i+=50)
 	{
 		// add a small line at the y-axis to indicate degrees
@@ -160,8 +162,6 @@ function writeGraph(data) {
 
 	// add x-axis label
 	ctx.fillText("Months -->", AXIS_DISTANCE, HEIGHT + (AXIS_DISTANCE / 6));
-
-
 	ctx.stroke();
 }
 
