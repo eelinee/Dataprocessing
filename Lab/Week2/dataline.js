@@ -28,7 +28,7 @@ loadRawFile.onreadystatechange = function() {
 
        // perform when document is ready
        var data = loadRawFile.responseText;
-       console.log(data);
+       //console.log(data);
        writeGraph(data);
     }
 };
@@ -184,7 +184,7 @@ function createTransform(domain, range){
 
     // returns the function for the linear transformation (y= a * x + b)
     return function(x){
-      return alpha * x + beta;
+    	return alpha * x + beta;
     }
 }
 

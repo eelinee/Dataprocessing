@@ -1,0 +1,57 @@
+<!-- DESCRIPTION HERE -->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<h1> Maximum temperature in de Bilt, 2014</h1>
+		<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<script src="barchart.js"></script>
+		<style>
+		.chart rect {
+			fill: rgb(0, 196, 144);
+		}
+
+		.chart rect:hover {
+			fill: blue;
+			.chart text {
+				fill: white;
+				font: 20px sans-serif;
+			}
+		}
+
+		.chart text {
+			fill: rgb(0, 196, 144);
+			font: 20px sans-serif;
+			text-anchor: middle;
+		}
+
+		.axis text {
+			fill: black;
+			font: 10px sans-serif;
+		}
+
+		.axis path,
+
+		.axis line {
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
+		}
+		.chart tooltip {
+			position: absolute;
+			text-align: center;
+			width: 60px;
+			height: 28px;
+			padding: 2px;
+			font: 12px sans-serif;
+			background: lightsteelblue;
+			border: 0px;
+			border-radius: 8px;
+			pointer-events: none;
+		}
+		</style>
+	</head>
+	<body>
+		<svg class="chart"></svg>
+	</body>
+</html>
