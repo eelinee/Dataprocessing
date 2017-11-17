@@ -1,0 +1,24 @@
+Progress Report 1
+
+Onderwerp: immigratie en bevolkingsgroei
+
+Dataset 1 CBS: http://statline.cbs.nl/Statweb/publication/?DM=SLNL&PA=37943NED&D1=0-9,419,424,445-446&D2=357-359,361-363,365-367,369-371,374-376,378-380,382-384&HDR=G1&STB=T&VW=T
+
+Artikel 1 CBS: https://www.cbs.nl/nl-nl/nieuws/2017/44/bevolking-groeit-wederom-vooral-door-migratie
+
+Dataset 2 CBS: http://statline.cbs.nl/Statweb/publication/?VW=T&DM=SLNL&PA=37943NED&D1=0-9,419,424,445-446&D2=12-13,97-98,182-183,267-268,352-353,369-370&HD=170130-1215&HDR=G1&STB=T
+
+Artikel 2 CBS: https://www.cbs.nl/nl-nl/nieuws/2017/05/migratie-zorgt-voor-relatief-hoge-bevolkingsgroei
+
+
+Ons onderwerp is de relatie tussen immigratie en bevolkingsgroei.
+Uit de recente cijfers van het Centraal Bureau voor de Statistiek (CBS) blijkt dat
+Nederland in de eerste drie kwartalen van 2017 te maken had met een bevolkingsgroei van 80 duizend inwoners.
+Hiervan was de grootste oorzaak de buitenlandse migratie.
+Het grootste deel van deze migranten zijn Syriërs. Deze groep toont echter wel een daling
+in omvang in de laatste paar maanden. Desondanks kent ons land ongeveer 1000 nieuwe
+Syriërs per maand.
+
+Het onderwerp is vanuit verschillende aspecten te bekijken. Het zou bijvoorbeeld interessant kunnen zijn
+vanuit een economisch standpunt te bekijken waarom deze mensen naar Nederland komen,
+hoewel een politiek of maatschappelijk standpunt misschien meer voor de hand ligt.
