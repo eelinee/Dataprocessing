@@ -1,3 +1,16 @@
+/**
+* Name: Eline Rietdijk
+* Studentnumber: 10811834
+* Project: Barchart
+*
+* "barchart.js"
+* This file loads data and calculates montly mean to create a bar chart
+* depicting the monthly mean temperature in de Bilt, 2014.
+*
+* D3 tutorial source: http://alignedleft.com/tutorials/d3/
+* d3-tooltip source: http://bl.ocks.org/Caged/6476579
+**/
+
 window.onload = function() {
 
 	// change background color of webpage to "whitesmoke"
@@ -28,7 +41,9 @@ function createBarChart(monthlyMean) {
 		months[i] = monthlyMean[i].month
 	}
 
-	// DIT ALLEMAAL VAN DIE BARCHART 2 UITLEG!!!
+	/* From here, this script is based on the D3 tutorials by Scott Murray 
+	** and the d3-tooltip block by Justin Palmer (see header for links) 
+	*/
 
 	// set margins for whitespace on sides of the chart
 	var margin = {top: 20, right: 30, bottom: 50, left: 40},
@@ -67,18 +82,23 @@ function createBarChart(monthlyMean) {
 		.data(mean).enter()
 		.append("g")
 		.attr("transform", function(d, i) {return "translate(" + i * barWidth + "," + 0 + ")"; });
+
+	var tip = d3.tip()
+		.attr("class", "d3-tip")
+		.offset([-10, 0])
+		.html(function(d, i) {
+			return "<text style = 'color:whitesmoke'>Temp:</text> <strong style = 'color:rgb(0, 148, 92)'>" + mean[i] + "</strong>";
+		})
+
+	chart.call(tip);
 	
 	// create bar (rect) for each datapoint with corresponding scaled height
 	bar.append("rect")
 		.attr("y", function(d) {return y(d); })
 		.attr("height", function(d) {return height - y(d); })
 		.attr("width", x.rangeBand())
-	
-	// add text containing corresponding value to the top of the bar
-	bar.append("text")
-		.attr("x", barWidth / 2)
-		.attr("y", function(d) {return y(d) + 3; })
-		.attr("dy", ".75em").text(function(d) {return d; });
+		.on("mouseenter", tip.show)
+		.on("mouseout", tip.hide)
 
 	// create x-axis based on scale and oriented at the bottom
 	var xAxis = d3.svg.axis()
