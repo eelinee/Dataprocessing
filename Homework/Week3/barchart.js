@@ -153,30 +153,55 @@ function calcMonthlyMean(data) {
 		date[i] = data[i].date
 	}
 
-	// calculate mean max temerature for each month
+	// initialize empty arrays to store temperatures
 	var monthlyMean = [];
 	var monthTemp = [];
+
+	// initialize counters 
 	var counterMonth = 0;
 	var total = 0;
-	var prevMonth = 1;
 	var counterDay = 0
+
+	// set previous month to 1 since januari corresponds to 1
+	var prevMonth = 1;
+
+	// create array containing month names
 	var months = ["Januari", "Februari", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+	// iterate over temperature array
 	for (var i = 0; i < temp.length; i++) {
+
+		// if the month has changed or if at the end of the array, do the following:
 		if (date[i][5] != prevMonth || i == temp.length - 1) {
+
+			// calculate mean temp of month with total / amount of days
 			monthTemp[counterMonth] = total/counterDay
+
+			// set total to 0 for new month
 			total = 0;
+			// increase month number
 			counterMonth ++;
+
+			// set day counter to 0 for next month
 			counterDay = 0;
 		}
+
+		// increase day number
 		counterDay ++;
+
+		// add current temp to total temp
 		total += temp[i];
+
+		// remember month for next loops
 		prevMonth = date[i][5]
 	}
 
+	// create JSON object containing month name and monthly mean
 	for (var j = 0; j < 12; j ++) {
 		monthlyMean.push({"month": months[j], "mean": monthTemp[j]});
 	}
+
+	// return JSON object
 	return monthlyMean
 }
 	
