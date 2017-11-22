@@ -42,7 +42,7 @@ for row in reader:
 
 	# print ] at the end of the last line
 	else: 
-		jsonfile.write(']'
+		jsonfile.write(']')
 
 	# start new line at the end of each line
 	jsonfile.write('\n')

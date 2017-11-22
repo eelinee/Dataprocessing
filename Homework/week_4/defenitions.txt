@@ -1,0 +1,5 @@
+Human Development Index (HDI): A composite index measuring average achievement in three basic dimensions of human development—a long and healthy life, knowledge and a decent standard of living. See Technical note 1 at http://hdr.undp.org/sites/default/files/hdr2016_technical_notes.pdf for details on how the HDI is calculated.											
+Gender Inequality Index: A composite measure reflecting inequality in achievement between women and men in three dimensions: reproductive health, empowerment and the labour market. See Technical note 4 at http://hdr.undp.org/sites/default/files/hdr2016_technical_notes.pdf for details on how the Gender Inequality Index is calculated. 																	
+Source: Human Development Reports 
+HDI: http://hdr.undp.org/en/composite/HDI
+GII: http://hdr.undp.org/en/composite/GII

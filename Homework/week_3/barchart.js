@@ -53,7 +53,8 @@ function createBarChart(monthlyMean) {
 		height = 500 - margin.top - margin.bottom;
 
 	// create y function to scale values for y-axis
-	var y = d3.scale.linear().range([height, 0]);
+	var y = d3.scale.linear()
+		.range([height, 0]);
 
 	// create x function to scale ordinal values, because x-values are month names
 	var x = d3.scale.ordinal()
