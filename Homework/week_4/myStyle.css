@@ -1,5 +1,18 @@
+/*
+Name: Eline Rietdijk
+Studentnumber: 10811834
+
+'myStyle.css'
+This script contains the style attributes for the file scatterplot.html
+*/
+
 body {
 	font: 10px sans-serif;
+}
+
+.xline {
+	stroke: #000;
+	fill: black;
 }
 
 .axis path,
@@ -13,10 +26,24 @@ body {
 
 .dot {
 	stroke: #000;
+	stroke-width: 1px;
 } 
-
-.dot:hover {
-	fill: blue;
-	r: 6;
+	
+.colors {
+	stroke: #000;
 }
+
+.text {
+	fill: none;
+	stroke: #000;
+}
+
+.d3-tip {
+	font-size: 15px;
+}
+
+.country {
+	font-size: 12px;
+}
+
  

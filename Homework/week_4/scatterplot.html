@@ -1,12 +1,38 @@
+<!-- 
+Name: Eline Rietdijk
+Studentnumber: 10811834
+
+'scatterplot.html'
+This file creates a scatterplot (using 'scatterplot.js' and 'myStyle.css') 
+depicting the relation between the Human Developmental Index and the Gender Inequality 
+Index, and it shows the defenitions of the variables used in the scatterplot 
+-->
+
 <!DOCTYPE html>
 
 <html>
 	<head>
 		<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+		<script src="https://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js">
+		</script>
 		<script src="scatterplot.js"></script>
-		<h2>Human Development Index and Gender Inequality Index</h2>
+		<h1>Human Development Index and Gender Inequality Index</h1>
 		<link rel="stylesheet" type="text/css" href="myStyle.css">
 	</head>
-	<body>
+	<body> <svg></svg>
+		<div> Name: Eline Rietdijk</div>
+		<div><p><strong>Defenitions:</strong></p>
+			<p><strong> Human Development Index (HDI):</strong> A composite
+			 index measuring average achievement in three basic dimensions of 
+			 human development :a long and healthy life, knowledge and a decent
+			  standard of living. </p>
+			<p><strong>Gender Inequality Index:</strong> 
+				A composite measure reflecting inequality in achievement between
+				 women and men in three dimensions: 
+				reproductive health, empowerment and the labour market. </p>
+		<div><strong>Data source</strong> Human Development Reports:
+			<a href= "http://hdr.undp.org/en/composite/HDI"> HDI index</a>, 
+			<a href= "http://hdr.undp.org/en/composite/GII"> GII index</a>
+		</div>
 	</body>
 </html>
