@@ -21,6 +21,10 @@ option {
 	font-size: 1.1em;
 }
 
+font {
+	font-size: 15px;
+}
+
 .axis path,
 
 .axis line {
@@ -35,25 +39,6 @@ option {
 	stroke: #000;
 }
 
-.d3-tip {
-	font-size: 15px;
-}
-
-.textInfo {
-	font-size: 15px;
-	text-anchor: end;
-}
-
-.yearInfo {
-	font-size: 15px;
-	text-anchor: middle;
-}
-
-.pointerCircle {
-	fill: none;
-	stroke: blue;
-}
-
 .legendaRect {
 	stroke: black;
 	stroke-width: 1px;
@@ -63,3 +48,10 @@ option {
 	text-anchor: middle;
 }
 
+#legendaTextbox {
+	fill: none;
+}
+
+.pointerLine {
+	stroke: black;
+}

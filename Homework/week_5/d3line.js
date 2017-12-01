@@ -4,30 +4,30 @@
 * Project: D3 line
 *
 * 'd3line.js'
-* This script ... NOG INVULLEN
+* This script creates a multiline graph for weighclass data 
+* for two different population groups (4 - 20 years old / 20 years and older)
 **/
 
-// define colors for different lines
-//
-
+// initialize global variables
 var svg;
 var above20;
 var under20;
+var currentData;
 var line = [{
 	"Normaalgewicht" : "",
 	"Overgewicht" : "",
 	"Ondergewicht" : "" 
-}]
+}];
 
-COLORS = [{
+// create array containing the variable names of the used dataset
+var WEIGHTCLASSES = ["Normaalgewicht", "Ondergewicht", "Overgewicht"];
+
+// create json object containing colors corresponding to weightclass
+var COLORS = [{
 	"Normaalgewicht" : "rgb(51, 204, 51)",
 	"Ondergewicht" : "rgb(204, 128, 51)",
 	"Overgewicht" : "rgb(204, 51, 51)"
-}]
-
-var currentData;
-
-var weightclasses = ["Normaalgewicht", "Ondergewicht", "Overgewicht"]
+}];
 
 
 window.onload = function() {
@@ -37,16 +37,16 @@ window.onload = function() {
 			alert("Could not load data")
 			throw error;
 		}
-		createLine(data)
+		createGraph(data)
 	});
 }
 
-function createLine(data) {
+function createGraph(data) {
 
 	// create arrays to store data for the group under and above 20 years old
-	under20 = []
-	above20 = []
-	years = []
+	under20 = [];
+	above20 = [];
+	years = [];
 	
 	//change all strings containing values to integers
 	for (var i = 0; i < data.length; i++) {
@@ -56,8 +56,8 @@ function createLine(data) {
 		}
 		else {
 			above20.push(data[i])
-		}
-	}
+		};
+	};
 
 	// under20 is currentData, because this option is selected at first 
 	currentData = under20;
@@ -73,11 +73,11 @@ function createLine(data) {
 	var x = d3.scale.ordinal()
 		.range([0, width])
 		.domain(years)
-		.rangeRoundBands([0, width])
+		.rangeRoundBands([0, width]);
 
 	var y = d3.scale.linear()
 		.range([height, 0])
-		.domain([0, 100])
+		.domain([0, 100]);
 
 	// create x and y-axis elements
 	var xAxis = d3.svg.axis()
@@ -87,7 +87,7 @@ function createLine(data) {
 	var yAxis = d3.svg.axis()
 		.scale(y)
 		.orient("left")
-		.tickFormat(function(d) {return d + "%"})
+		.tickFormat(function(d) {return d + "%"});
 
 	// select svg element and create svg with appriopriate width and height
 	svg = d3.select("svg")
@@ -112,7 +112,7 @@ function createLine(data) {
 		.attr("dy", ".71em")
 		.style("text-anchor", "end")
 		.style("font-size", "13")
-		.text("Year")
+		.text("Year");
 
 
 	// add g element with y-axis 
@@ -139,13 +139,13 @@ function createLine(data) {
 	});
 
 	// create the lines for each weightclass using the current data
-	createLines(x, y, svg, currentData, weightclasses[0])
-	createLines(x, y, svg, currentData, weightclasses[1])
-	createLines(x, y, svg, currentData, weightclasses[2])
+	createLine(x, y, svg, currentData, WEIGHTCLASSES[0]);
+	createLine(x, y, svg, currentData, WEIGHTCLASSES[1]);
+	createLine(x, y, svg, currentData, WEIGHTCLASSES[2]);
 
 	// append rectangles containing color for the legenda
 	svg.selectAll("#legendaColors")
-		.data(weightclasses)
+		.data(WEIGHTCLASSES)
 		.enter().append("rect")
 		.attr("id", "legenaColors")
 		.attr("class", "legendaRect")
@@ -155,19 +155,18 @@ function createLine(data) {
 		.attr("height", 20)
 
 		// fill with color corresponding to region name
-		.style("fill", function(d) {return COLORS[0][d]})
+		.style("fill", function(d) {return COLORS[0][d]});
 
 	// append rectangles containing color for the legenda
 	svg.selectAll("#legendaTextbox")
-		.data(weightclasses)
+		.data(WEIGHTCLASSES)
 		.enter().append("rect")
-		.attr("id", "legenaTextbox")
+		.attr("id", "legendaTextbox")
 		.attr("class", "legendaRect")
 		.attr("x", width + 25)
 		.attr("y", function(d, i) {return 5 + 25 * i})
 		.attr("width", 80)
-		.attr("height", 20)
-		.style("fill", "none")
+		.attr("height", 20);
 
 	// create array containing text to be displayed at the legenda
 	var legendaText = ["Normalweight", "Underweight", "Overweight"];
@@ -182,22 +181,21 @@ function createLine(data) {
 		.attr("y", function(d, i) {return 18 + 25 * i})
 		.attr("width", 80)
 		.attr("height", 20)
-		.text(function(d) {return d})
+		.text(function(d) {return d});
 
 	// create g element for the mouse interactivity
 	var mouseG = svg.append("g")
-		.attr("class", "interactivity")
+		.attr("class", "interactivity");
 
 	// append vertical line to g element to follow mouse
 	mouseG.append("line")
-		.attr("class", "pointerlLine")
+		.attr("class", "pointerLine")
 		.attr("id", "pointerLine")
 		.attr("x1", 0)
 		.attr("x2", 0)
 		.attr("y1", 0)
 		.attr("y2", height)
-		.style("stroke", "black")
-		.attr("opacity", 1)
+		.attr("opacity", 1);
 
 	// append rectangle to catch mouse movements on the screen
 	mouseG.append("svg:rect")
@@ -224,23 +222,23 @@ function createLine(data) {
 		// on mousemove, call createCrosshair function
 		.on("mousemove", function() {
 			var coordinates = d3.mouse(this);
-			createCrosshair(coordinates, x, y, mouseG);
-		})
-}
+			createCrosshair(coordinates, x, y, mouseG, height);
+		});
+};
 
-function createLines(x, y, svg, data, weight) {
+function createLine(x, y, svg, data, weight) {
 
-	//colors = [COLOR_NORMALWEIGHT, COLOR_UNDERWEIGHT, COLOR_OVERWEIGHT]
-
+	// create line function for weight
 	line[weight] = d3.svg.line()
 		.x(function(d) {return x(d.Jaar)})
-		.y(function(d) {return y(d[weight])})
+		.y(function(d) {return y(d[weight])});
 
+	// create path with corresponding linefunction and color
 	svg.append("svg:path")
 		.attr("d", line[weight](data))
 		.attr("class", weight)
-		.style("stroke", COLORS[0][weight])
-	}
+		.style("stroke", COLORS[0][weight]);
+};
 
 function updateData(value) {
 
@@ -250,46 +248,46 @@ function updateData(value) {
 	}
 	else {
 		currentData = under20
-	}
+	};
 	
 	// create transition variable for the datachange
 	var transition = svg.transition().duration(750),
 		delay = function(d, i) {return i * 50};
 
 	// for each weighclass, set d in line function to new dataset
-	for(var i = 0; i < weightclasses.length; i++) {
-		selection = weightclasses[i]
+	for(var i = 0; i < WEIGHTCLASSES.length; i++) {
+		selection = WEIGHTCLASSES[i];
 		transition.select("." + selection)
-			.attr("d", line[selection](currentData))
-	}
-}
+			.attr("d", line[selection](currentData));
+	};
+};
 
-function createCrosshair(coordinates, x, y, mouseG) {
+function createCrosshair(coordinates, x, y, mouseG, height) {
 
 	// invert function is incompatible with ordinal scales
-	xCoordinate = coordinates[0]
+	xCoordinate = coordinates[0];
 
 	// set pointerLine x to x-coordinates of mouse
 	mouseG.select("#pointerLine")
 		.attr("x1", coordinates[0])
-		.attr("x2", coordinates[0])
+		.attr("x2", coordinates[0]);
 
 	// initialize closest data value to the first value of current data
-	closest = [currentData[0]]
+	closest = [currentData[0]];
 
 	// iterate over data to find datapoint with x closest to mouse x
 	for (var i = 0; i < currentData.length; i ++) {
 		if ((Math.abs(x(currentData[i].Jaar) - xCoordinate)) < (Math.abs(x(closest[0].Jaar) - xCoordinate))) {
-			closest[0] = currentData[i]
-		}
-	}
+			closest[0] = currentData[i];
+		};
+	};
 
 	// remove old pointerCircle before adding new
-	mouseG.selectAll(".pointerCircle").remove()
+	mouseG.selectAll(".pointerCircle").remove();
 	mouseG.selectAll(".pointerCircle")
 
 		// for each weightclass, add circle element that follows mouse
-		.data(weightclasses).enter()
+		.data(WEIGHTCLASSES).enter()
 		.append("circle")
 		.attr("class", "pointerCircle")
 		.attr("cx", coordinates[0])
@@ -298,35 +296,52 @@ function createCrosshair(coordinates, x, y, mouseG) {
 		.attr("cy", function(d) {return y(closest[0][d])})
 		.attr("r", 10)
 		.style("fill", "none")
-		.style("stroke", function(d) { return COLORS[0][d]})
+		.style("stroke", function(d) { return COLORS[0][d]});
 
 	// remove old pointerRect before adding new
-	mouseG.selectAll(".pointerRect").remove()
+	mouseG.selectAll(".pointerRect").remove();
 	mouseG.selectAll(".pointerRect")
 
 		// for each weightclass, add a rect (to place value text on)
-		.data(weightclasses).enter()
+		.data(WEIGHTCLASSES).enter()
 		.append("rect")
 		.attr("class", "pointerRect")
-		.attr("x", coordinates[0] + 10)
+		.attr("x", coordinates[0] + 15)
 
 		// set y to y-coordinate of closest datapoint for each weightclass
-		.attr("y", function(d) {return y(closest[0][d]) - 20})
-		.attr("width", 20)
+		.attr("y", function(d) {return y(closest[0][d]) - 10})
+		.attr("width", 22)
 		.attr("height", 15)
-		.attr("fill", "white")
+		.attr("fill", "white");
 
 	// remove old pointerText before adding new
-	mouseG.selectAll(".pointerText").remove()
+	mouseG.selectAll(".pointerText").remove();
 	mouseG.selectAll(".pointerText")
 
 		// for each weightclass, add a text element that follows mouse
-		.data(weightclasses).enter()
+		.data(WEIGHTCLASSES).enter()
 		.append("text")
 		.attr("class", "pointerText")
-		.attr("x", coordinates[0] + 10)
+		.attr("x", coordinates[0] + 17)
 
 		// set y and text to appropriate values for current weightclass
-		.attr("y", function(d) {return y(closest[0][d]) - 10})
-		.text(function(d) {return closest[0][d]})
+		.attr("y", function(d) {return y(closest[0][d])})
+		.text(function(d) {return closest[0][d]});
+
+	// append rectangle following the pointerLine
+	mouseG.append("rect")
+		.attr("class", "pointerRect")
+		.attr("x", coordinates[0] - 20)
+		.attr("y", height + 7)
+		.attr("width", 40)
+		.attr("height", 15)
+		.attr("fill", "white");
+
+	// append text containing year value on top of rectanle
+	mouseG.append("text")
+		.attr("class", "pointerText")
+		.attr("x", coordinates[0])
+		.attr("y", height + 17)
+		.text(closest[0].Jaar)
+		.style("text-anchor", "middle");
 }

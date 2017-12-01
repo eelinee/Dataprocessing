@@ -1,3 +1,12 @@
+<!-- 
+Name: Eline Rietdijk
+Studentnumber: 10811834
+
+'d3line.html'
+This script creates a multiline graph for weighclass data 
+for two different population groups (4 - 20 years old / 20 years and older) 
+-->
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -6,24 +15,25 @@
 		<link rel="stylesheet" type="text/css" href="myStyle.css">
 		<script src="https://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js">
 		</script>
-		<h2>Percentages of weight classes 20 years and older in the Netherlands</h2>
+		<h1>Percentages of people with Normal weight, Overweight and Underweight in the Netherlands</h1>
 	</head>
 	<body>
 		<div id = "option">
+			<font>Age class:</font>
 			<select type = "select" onchange = "updateData(value);">
-				<option value = "under20" name = "4-20" selected = "true">4 through 20 years old</option>
+				<option value = "under20" name = "4-20" selected = "true">4 - 20 years old</option>
 				<option value = "above20" name = "20">20 years and older</option>
 			</select>
 		</div>
 		<svg>
 		</svg>
 		<div>
-			Name: Eline Rietdijk
+			<font>Name: Eline Rietdijk</font>
 		</div>
 		<div>
-			Data source:
+			<font>Data source:</font>
 			<a href="https://opendata.cbs.nl/#/CBS/nl/dataset/81565NED/table?ts=1512124685467" target="black">
-				Opendata CBS
+				<font>Opendata CBS</font>
 			</a>
 		</div>
 	</body>
