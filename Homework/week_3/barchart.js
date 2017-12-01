@@ -21,7 +21,6 @@ window.onload = function() {
 
 		// calculate the monthly mean of just loaded data
 		monthlyMean = calcMonthlyMean(data);
-		console.log(monthlyMean)
 
 		// create barchart of monthly mean
 		createBarChart(monthlyMean);
@@ -44,6 +43,9 @@ function createBarChart(monthlyMean) {
 	/* From here, this script is based on the D3 tutorials by Scott Murray 
 	** and the d3-tooltip block by Justin Palmer (see header for links) 
 	*/
+
+	console.log(months)
+	console.log(mean)
 
 	// set margins for whitespace on sides of the chart
 	var margin = {top: 20, right: 30, bottom: 50, left: 40},
@@ -75,8 +77,6 @@ function createBarChart(monthlyMean) {
 
 	// calculate barwidth, based on width and amount of bars (mean.length)
 	var barWidth = width / mean.length
-
-	console.log("b")
 
 	// create 'g' element for each data point on x-axis
 	var bar = chart.selectAll("g")
@@ -141,7 +141,7 @@ function type(d) {
 	// TOT AAN HIER 
 
 function calcMonthlyMean(data) {
-	console.log(data.length)
+	
 	// create empty array to store temperature values
 	temp = [];
 

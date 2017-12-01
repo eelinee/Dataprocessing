@@ -1,0 +1,65 @@
+/*
+Name: Eline Rietdijk
+Studentnumber: 10811834
+
+'myStyle.css'
+This script contains the style attributes for the file d3line.html
+*/
+
+body {
+	font: 10px sans-serif;
+}
+
+path {
+	stroke: blue;
+	stroke-width: 2;
+	fill: none;
+}
+
+option {
+	color: black;
+	font-size: 1.1em;
+}
+
+.axis path,
+
+.axis line {
+	fill: none;
+	stroke: #000;
+	stroke-width: 1px;
+	shape-rendering: crispEdges;
+}
+
+.text {
+	fill: none;
+	stroke: #000;
+}
+
+.d3-tip {
+	font-size: 15px;
+}
+
+.textInfo {
+	font-size: 15px;
+	text-anchor: end;
+}
+
+.yearInfo {
+	font-size: 15px;
+	text-anchor: middle;
+}
+
+.pointerCircle {
+	fill: none;
+	stroke: blue;
+}
+
+.legendaRect {
+	stroke: black;
+	stroke-width: 1px;
+}
+
+.legendaText {
+	text-anchor: middle;
+}
+
