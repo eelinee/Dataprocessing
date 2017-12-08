@@ -1,12 +1,33 @@
-.map-tip {
+.parent_svg {
+	width: 1000px;
+	height: 1000px;
+}
+
+.map_svg {
+	background-color: grey;
+	float: left;
+}
+
+.map_tip {
 	background-color: black;
 	fill-opacity: 0.4;
 	font-color: black;
 }
 
-.chart-tip {
+.chart_tip {
 	font-color: black;
 }
-.chart {
+
+.chart_svg {
 	background-color: whitesmoke;
+	float: right;
+}
+
+.axis path,
+
+.axis line {
+	fill: none;
+	stroke: #000;
+	stroke-width: 1px;
+	shape-rendering: crispEdges;
 }
