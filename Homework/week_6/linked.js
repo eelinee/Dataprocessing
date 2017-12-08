@@ -52,13 +52,13 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 	var margin = {top: 10, right: 30, bottom: 70, left: 75},
 
 		// set width and height of the total svg
-		width = 1000
+		width = 1100
 		height = 600
 
 	// set width of individual elements
-	chart_width = width / 2 + 30 - margin.left - margin.right
+	chart_width = width / 2 + 100 - margin.left - margin.right
 	chart_height = height - margin.top - margin.bottom
-	map_width = width / 2 - 30
+	map_width = width / 2 - 100
 
 	// select svg element and create svg with appriopriate width and height
 	var map_svg = d3.select(".map_svg")
@@ -94,8 +94,8 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 		g.selectAll("path")
 			var l = topojson.feature(nld, nld.objects.subunits).features[3],
 				b = path.bounds(l),
-				s = .2 / Math.max((b[1][0] - b[0][0]) / map_width, (b[1][1] - b[0][1]) / (height)),
-				t = [(map_width - s * (b[1][0] + b[0][0])) / 2, ((height) - s * (b[1][1] + b[0][1])) / 2];
+				s = .2 / Math.max((b[1][0] - b[0][0]) / (map_width + 200), (b[1][1] - b[0][1]) / (height + 200)),
+				t = [(map_width - 150 - s * (b[1][0] + b[0][0])) / 2, ((height + 50) - s * (b[1][1] + b[0][1])) / 2];
 			
 			projection
 				.scale(s)
@@ -166,7 +166,8 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 
 	var yAxis = d3.svg.axis()
 		.scale(y)
-		.orient("left");
+		.orient("left")
+		.tickFormat(function(d) {return d + "%"});
 
 	// append x-axis to the chart
 	chart_svg.append("g")
@@ -195,7 +196,7 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 		.attr("y", - margin.left / 1.2)
 		.attr("dy", ".71em")
 		.style("text-anchor", "end")
-		.text("Aantal Misdrijven");
+		.text("Percentage van totaal");
 
 	// calculate barwidth, based on width and amount of bars 
 	var barWidth = chart_width / 12
@@ -204,12 +205,35 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 		.attr("class", "chart_tip")
 		.offset([-10, 0])
 		.html(function(d) {
-			return "<text style = 'color:black'>"+ d.Misdrijf +":" + d.GeregistreerdeMisdrijvenRelatief_2 + "</text>";
+			return "<text style = 'color:black'>"+ d.Misdrijf +": " + d.GeregistreerdeMisdrijvenRelatief_2 + "%</text>";
 		})
 
 	chart_svg.call(chart_tip)
 
-	current_data = provincies[0];
+	current_data = provincies[6];
+
+	chart_svg.selectAll("#legendaColors")
+		.data(current_data)
+		.enter().append("rect")
+		.attr("id", "legendaColors")
+		.attr("class", "legenda")
+		.attr("x", 300)
+		.attr("y", function(d, i) {return 0 + 25 * i})
+		.attr("width", 20)
+		.attr("height", 20)
+		.style("fill", function(d) {return chart_colors(d.Misdrijf)})
+
+	chart_svg.selectAll("#legendaText")
+		.data(current_data)
+		.enter().append("text")
+		.attr("id", "legendaText")
+		.attr("class", "legenda")
+		.attr("x", 325)
+		.attr("y", function(d, i) {return 12 + 25 * i})
+		.attr("width", 50)
+		.attr("height", 40)
+		.text(function(d) {return d.Misdrijf})
+		.attr("text-anchor", "start")
 
 	// create bar (rect) for each datapoint with corresponding scaled height
 	var bar = chart_svg.selectAll(".bar")
@@ -229,6 +253,8 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 			chart_tip.hide(d, i)
 			d3.select(this).style("opacity", 1)
 		});
+
+
 }
 
 function click_event(location) {
