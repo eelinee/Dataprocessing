@@ -1,0 +1,12 @@
+.map-tip {
+	background-color: black;
+	fill-opacity: 0.4;
+	font-color: black;
+}
+
+.chart-tip {
+	font-color: black;
+}
+.chart {
+	background-color: whitesmoke;
+}
