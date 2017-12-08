@@ -4,7 +4,6 @@
 }
 
 .map_svg {
-	background-color: grey;
 	float: left;
 }
 
@@ -19,7 +18,6 @@
 }
 
 .chart_svg {
-	background-color: whitesmoke;
 	float: right;
 }
 

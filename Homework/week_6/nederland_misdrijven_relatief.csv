@@ -1,0 +1,105 @@
+﻿ID,Misdrijf,Provincie,GeregistreerdeMisdrijvenRelatief_2
+3379,Vermogensmisdrijven,Groningen,62
+3386,Vermogensmisdrijven,Friesland,57
+3393,Vermogensmisdrijven,Drenthe,58
+3400,Vermogensmisdrijven,Overijssel,61
+3407,Vermogensmisdrijven,Flevoland,60
+3414,Vermogensmisdrijven,Gelderland,62
+3421,Vermogensmisdrijven,Utrecht,67
+3428,Vermogensmisdrijven,Noord-Holland,67
+3435,Vermogensmisdrijven,Zuid-Holland,61
+3442,Vermogensmisdrijven,Zeeland,51
+3449,Vermogensmisdrijven,Noord-Brabant,63
+3456,Vermogensmisdrijven,Limburg,64
+3463,Vermogensmisdrijven,PV99,55
+60023,Vernieling en verstoring openbare orde,Groningen,14
+60030,Vernieling en verstoring openbare orde,Friesland,16
+60037,Vernieling en verstoring openbare orde,Drenthe,16
+60044,Vernieling en verstoring openbare orde,Overijssel,14
+60051,Vernieling en verstoring openbare orde,Flevoland,13
+60058,Vernieling en verstoring openbare orde,Gelderland,13
+60065,Vernieling en verstoring openbare orde,Utrecht,13
+60072,Vernieling en verstoring openbare orde,Noord-Holland,11
+60079,Vernieling en verstoring openbare orde,Zuid-Holland,12
+60086,Vernieling en verstoring openbare orde,Zeeland,18
+60093,Vernieling en verstoring openbare orde,Noord-Brabant,12
+60100,Vernieling en verstoring openbare orde,Limburg,12
+60107,Vernieling en verstoring openbare orde,PV99,4
+136659,Gewelds- en seksuele misdrijven,Groningen,12
+136666,Gewelds- en seksuele misdrijven,Friesland,11
+136673,Gewelds- en seksuele misdrijven,Drenthe,12
+136680,Gewelds- en seksuele misdrijven,Overijssel,10
+136687,Gewelds- en seksuele misdrijven,Flevoland,10
+136694,Gewelds- en seksuele misdrijven,Gelderland,10
+136701,Gewelds- en seksuele misdrijven,Utrecht,7
+136708,Gewelds- en seksuele misdrijven,Noord-Holland,9
+136715,Gewelds- en seksuele misdrijven,Zuid-Holland,10
+136722,Gewelds- en seksuele misdrijven,Zeeland,12
+136729,Gewelds- en seksuele misdrijven,Noord-Brabant,9
+136736,Gewelds- en seksuele misdrijven,Limburg,9
+136743,Gewelds- en seksuele misdrijven,PV99,18
+193303,Misdrijven WvSr,Groningen,1
+193310,Misdrijven WvSr,Friesland,1
+193317,Misdrijven WvSr,Drenthe,1
+193324,Misdrijven WvSr,Overijssel,1
+193331,Misdrijven WvSr,Flevoland,1
+193338,Misdrijven WvSr,Gelderland,1
+193345,Misdrijven WvSr,Utrecht,1
+193352,Misdrijven WvSr,Noord-Holland,1
+193359,Misdrijven WvSr,Zuid-Holland,1
+193366,Misdrijven WvSr,Zeeland,1
+193373,Misdrijven WvSr,Noord-Brabant,1
+193380,Misdrijven WvSr,Limburg,1
+193387,Misdrijven WvSr,PV99,2
+196635,Verkeersmisdrijven,Groningen,9
+196642,Verkeersmisdrijven,Friesland,12
+196649,Verkeersmisdrijven,Drenthe,10
+196656,Verkeersmisdrijven,Overijssel,12
+196663,Verkeersmisdrijven,Flevoland,12
+196670,Verkeersmisdrijven,Gelderland,11
+196677,Verkeersmisdrijven,Utrecht,11
+196684,Verkeersmisdrijven,Noord-Holland,10
+196691,Verkeersmisdrijven,Zuid-Holland,14
+196698,Verkeersmisdrijven,Zeeland,14
+196705,Verkeersmisdrijven,Noord-Brabant,12
+196712,Verkeersmisdrijven,Limburg,11
+196719,Verkeersmisdrijven,PV99,17
+226623,Drugsmisdrijven,Groningen,1
+226630,Drugsmisdrijven,Friesland,2
+226637,Drugsmisdrijven,Drenthe,1
+226644,Drugsmisdrijven,Overijssel,1
+226651,Drugsmisdrijven,Flevoland,2
+226658,Drugsmisdrijven,Gelderland,1
+226665,Drugsmisdrijven,Utrecht,1
+226672,Drugsmisdrijven,Noord-Holland,2
+226679,Drugsmisdrijven,Zuid-Holland,1
+226686,Drugsmisdrijven,Zeeland,2
+226693,Drugsmisdrijven,Noord-Brabant,2
+226700,Drugsmisdrijven,Limburg,2
+226707,Drugsmisdrijven,PV99,1
+239951,Wapensmisdrijven,Groningen,0
+239958,Wapensmisdrijven,Friesland,0
+239965,Wapensmisdrijven,Drenthe,0
+239972,Wapensmisdrijven,Overijssel,1
+239979,Wapensmisdrijven,Flevoland,1
+239986,Wapensmisdrijven,Gelderland,0
+239993,Wapensmisdrijven,Utrecht,0
+240000,Wapensmisdrijven,Noord-Holland,1
+240007,Wapensmisdrijven,Zuid-Holland,1
+240014,Wapensmisdrijven,Zeeland,1
+240021,Wapensmisdrijven,Noord-Brabant,1
+240028,Wapensmisdrijven,Limburg,1
+240035,Wapensmisdrijven,PV99,1
+243283,Overige misdrijven,Groningen,0
+243290,Overige misdrijven,Friesland,0
+243297,Overige misdrijven,Drenthe,0
+243304,Overige misdrijven,Overijssel,0
+243311,Overige misdrijven,Flevoland,0
+243318,Overige misdrijven,Gelderland,0
+243325,Overige misdrijven,Utrecht,0
+243332,Overige misdrijven,Noord-Holland,0
+243339,Overige misdrijven,Zuid-Holland,0
+243346,Overige misdrijven,Zeeland,1
+243353,Overige misdrijven,Noord-Brabant,0
+243360,Overige misdrijven,Limburg,0
+243367,Overige misdrijven,PV99,2

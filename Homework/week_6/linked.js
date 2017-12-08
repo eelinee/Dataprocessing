@@ -3,12 +3,16 @@ Name: Eline Rietdijk
 Studentnumber: 10811834
 */
 
+var provincies;
+var chart_svg;
+var current_data;
+
 window.onload = function() {
 	
 	// load datasets using a queue 
 	d3.queue()
 	.defer(d3.csv, "nederland_criminaliteit_totaal.csv")
-	.defer(d3.csv, "nederland_soorten_misdrijven.csv")
+	.defer(d3.csv, "nederland_misdrijven_relatief.csv")
 	.await(create_map)
 }
 
@@ -30,7 +34,7 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 	var Limburg = ["Limburg"];
 	var Zeeland = ["Zeeland"];
 
-	var provincies = [Groningen, Friesland, Drenthe, Overijssel, Flevoland, Gelderland, 
+	provincies = [Groningen, Friesland, Drenthe, Overijssel, Flevoland, Gelderland, 
 		Utrecht, NoordHolland, ZuidHolland, NoordBrabant, Limburg, Zeeland]
 
 	for (i = 0; i < provincies.length; i ++) {
@@ -80,7 +84,7 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 
 	map_svg.call(map_tip)
 
-	var colors = d3.scale.quantize()
+	var map_colors = d3.scale.quantize()
 		.domain([40, 45, 50, 55, 60, 65, 75])
 		.range(["#ffe6e6", "#ffb3b3", "#ff8080", 
 			"#ff6666", "#ff1a1a", "#ff0000", "#cc0000"])
@@ -112,7 +116,7 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 								value = criminaliteit_totaal[j]
 							}
 						}
-						return colors(value.GeregistreerdeMisdrijvenPer1000Inw_3);
+						return map_colors(value.GeregistreerdeMisdrijvenPer1000Inw_3);
 					}
 					else {
 						return "grey"
@@ -132,21 +136,23 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 					d3.select(this).style("opacity", 1)
 				})
 				.on("click", function(d, i) {
-					click_event(d, i)
+					click_event(d.properties.name)
 				})
 	});
 	
-	var chart_svg = d3.select(".chart_svg")
+	chart_svg = d3.select(".chart_svg")
 		.append("svg")
 		.attr("width", chart_width + margin.left + margin.right)
 		.attr("height", chart_height + margin.top + margin.bottom)
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.right + ")");
 	
+	chart_colors = d3.scale.category10();
+	
 	// create y function to scale values for y-axis
 	var y = d3.scale.linear()
 		.range([chart_height, 0])
-		.domain([0, 20000]);
+		.domain([0, 70]);
 
 	// create x function to scale ordinal values, because x-values are month names
 	var x = d3.scale.ordinal()
@@ -167,17 +173,20 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 		.attr("class", "x axis")
 		.attr("transform", "translate(0," + chart_height + ")")
 		.call(xAxis)
-		.append("text")
+		.selectAll("text").remove()
+
+	chart_svg.append("text")
 		.attr("class", "label")
-		.attr("x", chart_width)
-		.attr("y", margin.bottom / 1.7) // HIER MISSCHIEN NOG AANPASSEN
-		.style("text-anchor", "end")
-		.text("Soort Misdrijf");
+		.attr("x", chart_width / 2)
+		.attr("y", height - margin.bottom / 1.5) // HIER MISSCHIEN NOG AANPASSEN
+		.style("text-anchor", "middle")
+		.style("font-size", 15)
+		.text("Soort Misdrijf")
+
 
 	// append text labels as legenda
 	chart_svg.append("g")
 		.attr("class", "y axis")
-		// .attr("transform", "translate(" + 0 + ", 0)")
 		.call(yAxis)
 		.append("text")
 		.attr("class", "label")
@@ -188,40 +197,83 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 		.style("text-anchor", "end")
 		.text("Aantal Misdrijven");
 
-
-
 	// calculate barwidth, based on width and amount of bars 
 	var barWidth = chart_width / 12
 
-// 	var chart_tip = d3.tip()
-// 		.attr("class", "chart-tip")
-// 		.offset([-10, 0])
-// 		.html(function(d, i) {
-// 			return "<text style = 'color:black'>"+ d.Misdrijf +":" + d.TotaalGeregistreerdeMisdrijven_1 + "</text>";
-// 		})
+	var chart_tip = d3.tip()
+		.attr("class", "chart_tip")
+		.offset([-10, 0])
+		.html(function(d) {
+			return "<text style = 'color:black'>"+ d.Misdrijf +":" + d.GeregistreerdeMisdrijvenRelatief_2 + "</text>";
+		})
 
-// 	svg_chart.call(chart_tip)
+	chart_svg.call(chart_tip)
+
+	current_data = provincies[0];
 
 	// create bar (rect) for each datapoint with corresponding scaled height
 	var bar = chart_svg.selectAll(".bar")
-		.data(provincies[0]).enter()
+		.data(current_data).enter()
 		.append("rect")
-		.attr("class", "bar")
-		.attr("y", function(d) {return y(d.TotaalGeregistreerdeMisdrijven_1); })
+		.attr("class", function(d, i) {return "bar" + i})
+		.attr("y", function(d) {return y(d.GeregistreerdeMisdrijvenRelatief_2); })
 		.attr("x", function(d) {return x(d.Misdrijf)})
-		.attr("height", function(d) {return chart_height - y(d.TotaalGeregistreerdeMisdrijven_1); })
+		.attr("height", function(d) {return chart_height - y(d.GeregistreerdeMisdrijvenRelatief_2); })
 		.attr("width", x.rangeBand())
-		.style("fill", "red")
-		// .on("mouseover", function(d, i) {
-		// 	chart_tip.show(d, i)
-		// 	d3.select(this).style("opacity", 0.4)
-		// })
-		// .on("mouseout", function(d, i) {
-		// 	chart_tip.hide(d, i)
-		// 	d3.select(this).style("opacity", 1)
-		// });
-
+		.style("fill", function(d) {return chart_colors(d.Misdrijf)})
+		.on("mouseover", function(d) {
+			chart_tip.show(d)
+			d3.select(this).style("opacity", 0.7)
+		})
+		.on("mouseout", function(d) {
+			chart_tip.hide(d, i)
+			d3.select(this).style("opacity", 1)
+		});
 }
+
+function click_event(location) {
+	if (location == "Groningen") {
+		current_data = provincies[0];
+	}
+	else if (location == "Friesland"){
+		current_data = provincies[1];
+	}
+	else if (location == "Drenthe"){
+		current_data = provincies[2];
+	}
+	else if (location == "Overijssel"){
+		current_data = provincies[3];
+	}
+	else if (location == "Flevoland"){
+		current_data = provincies[4];
+	}
+	else if (location == "Gelderland"){
+		current_data = provincies[5];
+	}
+	else if (location == "Utrecht"){
+		current_data = provincies[6];
+	}
+	else if (location == "Noord-Holland") {
+		current_data = provincies[7];
+	}
+	else if (location == "Zuid-Holland") {
+		currentData = provincies[8];
+	}
+	else if (location == "Noord-Brabant") {
+		currentData = provincies[9];
+	}
+	else if (location == "Limburg"){
+		current_data = provincies[10];
+	}
+	else {
+		current_data = provincies[11];
+	};
+
+	var transition = chart_svg.transition().duration(750), 
+		delay = function(d, i) { return i * 50};
+
+	console.log(current_data)
+} 
 
 
 
