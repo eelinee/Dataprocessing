@@ -1,0 +1,63 @@
+/*
+Name: Eline Rietdijk
+Studentnumber: 10811834
+
+'myStyle.css'
+This file contains style attributes for the file 'linked.html'
+*/
+
+.parentSvg {
+	width: 1300px;
+	height: 1000px;
+}
+
+.mapSvg {
+	float: left;
+}
+
+.tip {
+	line-height: 1;
+	font-weight: bold;
+	padding: 12px;
+	background: rgba(0 ,0, 0, 0.9);
+	color: #fff;
+	border-radius: 1px;
+}
+
+.chartSvg {
+	float: right;
+}
+
+.axis path,
+
+.axis line {
+	fill: none;
+	stroke: #000;
+	stroke-width: 1px;
+	shape-rendering: crispEdges;
+}
+
+#mapLegendaColors {
+	stroke-width: 1px;
+	stroke: black;
+}
+
+#legendaColors {
+	stroke-width: 1px;
+	stroke: black;
+}
+
+#chartName {
+	text-anchor: middle;
+	font-size: 50px;
+	opacity: 0.5;
+	font-family: Trebuchet;
+}
+
+#location:hover{
+	fill:grey;
+}
+
+.dataText {
+	width: 800px;
+}

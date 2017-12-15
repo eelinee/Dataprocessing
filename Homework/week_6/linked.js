@@ -1,26 +1,32 @@
-/* 
-Name: Eline Rietdijk
+/* Name: Eline Rietdijk
 Studentnumber: 10811834
-*/
 
-var provincies;
-var chart_svg;
-var current_data;
+'linked.js'
+This file is used in 'linked.html' to create two linked data visualisations:
+a map of the Netherlands and a barchart.*/
+
+// var provinces;
+// var chartSvg;
+// var currentData;
+// var y;
+// var x;
+// var chartHeight;
+// var margin;
+// var height;
+// var width;
 
 window.onload = function() {
 	
 	// load datasets using a queue 
 	d3.queue()
-	.defer(d3.csv, "nederland_criminaliteit_totaal.csv")
-	.defer(d3.csv, "nederland_misdrijven_relatief.csv")
-	.await(create_map)
+	.defer(d3.csv, "netherlandsTotalCrime.csv")
+	.defer(d3.csv, "netherlandsRelativeCrime.csv")
+	.defer(d3.json, "netherlands.json")
+	.await(createVisualisation)
 }
 
-
-
-function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
-
-	console.log(criminaliteit_soort)
+function createVisualisation(error, totalCrime, relativeCrime, nld) {
+	
 	var Groningen = ["Groningen"];
 	var Friesland = ["Friesland"];
 	var Drenthe = ["Drenthe"];
@@ -34,39 +40,42 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 	var Limburg = ["Limburg"];
 	var Zeeland = ["Zeeland"];
 
-	provincies = [Groningen, Friesland, Drenthe, Overijssel, Flevoland, Gelderland, 
+	provinces = [Groningen, Friesland, Drenthe, Overijssel, Flevoland, Gelderland, 
 		Utrecht, NoordHolland, ZuidHolland, NoordBrabant, Limburg, Zeeland]
 
-	for (i = 0; i < provincies.length; i ++) {
-		for(j = 0; j < criminaliteit_soort.length; j ++) {
-			if (provincies[i][0] == criminaliteit_soort[j].Provincie) {
-				provincies[i].push(criminaliteit_soort[j])
+	for (i = 0; i < provinces.length; i ++) {
+		for(j = 0; j < relativeCrime.length; j ++) {
+			if (provinces[i][0] == relativeCrime[j].Provincie) {
+				provinces[i].push(relativeCrime[j])
+				}
 			}
-		}
-		provincies[i].splice(0, 1)
+		provinces[i].splice(0, 1)
 	}
 
-	console.log(provincies)
+	currentData = provinces[11];
 
 	// set margins for whitespace on sides of the graph
-	var margin = {top: 10, right: 30, bottom: 70, left: 75},
+	margin = {top: 10, right: 30, bottom: 70, left: 75},
 
 		// set width and height of the total svg
-		width = 1100
+		width = 1300
 		height = 600
 
-	// set width of individual elements
-	chart_width = width / 2 + 100 - margin.left - margin.right
-	chart_height = height - margin.top - margin.bottom
-	map_width = width / 2 - 100
+	createMap(totalCrime, nld)
+	createChart()
+}
+
+function createMap(totalCrime, nld) {
+
+	mapWidth = width / 2 - 200
 
 	// select svg element and create svg with appriopriate width and height
-	var map_svg = d3.select(".map_svg")
+	var mapSvg = d3.select(".mapSvg")
 		.append("svg")
-		.attr("width", map_width)
+		.attr("width", mapWidth)
 		.attr("height", height);
 
-	var g = map_svg.append("g")
+	var g = mapSvg.append("g")
 
 	var projection = d3.geo.mercator()
 		.scale(1)
@@ -75,89 +84,126 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 	var path = d3.geo.path()
 		.projection(projection);
 
-	var map_tip = d3.tip()
-		.attr("class", "map_tip")
-		.offset([-10, 0])
+	var mapTip = d3.tip()
+		.attr("class", "tip")
+		.attr("id", "mapTip")
+		.offset([-10, 50])
 		.html(function(d, i) {
-			return "<text style = 'color:whitesmoke'>"+ d.RegioS +":" + d.GeregistreerdeMisdrijvenPer1000Inw_3 + " Misdrijven per 1000 inwoners</text>";
+			return "<text style='color:red'>"+ d.RegioS +":</text><div><text>" + d.GeregistreerdeMisdrijvenPer1000Inw_3 + " misdrijven / 1000 inw.</text></div>";
 		})
 
-	map_svg.call(map_tip)
+	mapSvg.call(mapTip);
+
+	var mapValues = [40, 45, 50, 55, 60, 65, 75];
+	var mapColors = ["#ffe6e6", "#ffb3b3", "#ff8080", 
+			"#ff4d4d", "#ff1a1a", "#ff0000", "#ff0000"];
 
 	var map_colors = d3.scale.quantize()
-		.domain([40, 45, 50, 55, 60, 65, 75])
-		.range(["#ffe6e6", "#ffb3b3", "#ff8080", 
-			"#ff6666", "#ff1a1a", "#ff0000", "#cc0000"])
+		.domain(mapValues)
+		.range(mapColors);
 
 
-	d3.json("netherlands.json", function(error, nld) {
+	// create map of the Netherlands using nld.json
+	g.selectAll("path")
+		var l = topojson.feature(nld, nld.objects.subunits).features[3],
+			b = path.bounds(l),
+			s = .2 / Math.max((b[1][0] - b[0][0]) / (mapWidth + 200), (b[1][1] - b[0][1]) / (height + 200)),
+			t = [(mapWidth - 200 - s * (b[1][0] + b[0][0])) / 2, ((height + 115) - s * (b[1][1] + b[0][1])) / 2];
+		
+		projection
+			.scale(s)
+			.translate(t)
+
 		g.selectAll("path")
-			var l = topojson.feature(nld, nld.objects.subunits).features[3],
-				b = path.bounds(l),
-				s = .2 / Math.max((b[1][0] - b[0][0]) / (map_width + 200), (b[1][1] - b[0][1]) / (height + 200)),
-				t = [(map_width - 150 - s * (b[1][0] + b[0][0])) / 2, ((height + 50) - s * (b[1][1] + b[0][1])) / 2];
-			
-			projection
-				.scale(s)
-				.translate(t)
+			.data(topojson.feature(nld, nld.objects.subunits).features).enter()
+			.append("path")
+			.attr("d", path)
+			.attr("stroke", "black")
+			.attr("id", "location")
+			.attr("class", function(d, i) {
+				return d.properties.name;
+			})
+			.attr("fill", function(d, i) {
+				if (d.properties.name != null) {
+					for (var j = 0; j < totalCrime.length; j ++) {
+						if (totalCrime[j].RegioS == d.properties.name) {
+							value = totalCrime[j]
+						}
+					}
+					return map_colors(value.GeregistreerdeMisdrijvenPer1000Inw_3);
+				}
+				else {
+					return "grey"
+				}
+			})		
+			.on("mouseover", function(d, i) {
+				for (var j = 0; j < totalCrime.length; j ++) {
+						if (totalCrime[j].RegioS == d.properties.name) {
+							value = totalCrime[j]
+						}
+					}
+				mapTip.show(value, i)
+			})
+			.on("mouseout", function(d, i) {
+				mapTip.hide(d, i)
+			})
+			.on("click", function(d, i) {
+				clickEvent(d.properties.name)
+			})
 
-			g.selectAll("path")
-				.data(topojson.feature(nld, nld.objects.subunits).features).enter()
-				.append("path")
-				.attr("d", path)
-				.attr("stroke", "black")
-				.attr("class", function(d, i) {
-					return d.properties.name;
-				})
-				.attr("fill", function(d, i) {
-					if (d.properties.name != null) {
-						for (var j = 0; j < criminaliteit_totaal.length; j ++) {
-							if (criminaliteit_totaal[j].RegioS == d.properties.name) {
-								value = criminaliteit_totaal[j]
-							}
-						}
-						return map_colors(value.GeregistreerdeMisdrijvenPer1000Inw_3);
-					}
-					else {
-						return "grey"
-					}
-				})		
-				.on("mouseover", function(d, i) {
-					for (var j = 0; j < criminaliteit_totaal.length; j ++) {
-							if (criminaliteit_totaal[j].RegioS == d.properties.name) {
-								value = criminaliteit_totaal[j]
-							}
-						}
-					map_tip.show(value, i)
-					d3.select(this).style("opacity", 0.5)
-				})
-				.on("mouseout", function(d, i) {
-					map_tip.hide(d, i)
-					d3.select(this).style("opacity", 1)
-				})
-				.on("click", function(d, i) {
-					click_event(d.properties.name)
-				})
-	});
+	// create legenda for map
+	mapSvg.selectAll("#mapLegendaColors")
+		.data(mapColors)
+		.enter().append("rect")
+		.attr("id", "mapLegendaColors")
+		.attr("class", "legenda")
+		.attr("x", 10)
+		.attr("y", function(d, i) {return 25 + 25 * i})
+		.attr("width", 20)
+		.attr("height", 20)
+		.style("fill", function(d) {return d})
+
+	mapSvg.selectAll("#mapLegendaText")
+		.data(mapValues)
+		.enter().append("text")
+		.attr("id", "mapLegendaText")
+		.attr("class", "legenda")
+		.attr("x", 35)
+		.attr("y", function(d, i) {return 40 + 25 * i})
+		.text(function(d, i) {return d})
+
+	mapSvg.append("text")
+		.attr("class", "legenda")
+		.attr("x", 3)
+		.attr("y", 15)
+		.text("Aantal misdrijven per 1000 inwoners:")
+}
+
+function createChart() {
 	
-	chart_svg = d3.select(".chart_svg")
+	// set width of individual elements
+	chartWidth = width / 2 + 200 - margin.left - margin.right
+	chartHeight = height - margin.top - margin.bottom
+
+	// create svg for chart
+	chartSvg = d3.select(".chartSvg")
 		.append("svg")
-		.attr("width", chart_width + margin.left + margin.right)
-		.attr("height", chart_height + margin.top + margin.bottom)
+		.attr("width", chartWidth + margin.left + margin.right)
+		.attr("height", chartHeight + margin.top + margin.bottom)
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.right + ")");
 	
-	chart_colors = d3.scale.category10();
+	chartColors = d3.scale.category10();
 	
 	// create y function to scale values for y-axis
-	var y = d3.scale.linear()
-		.range([chart_height, 0])
+	y = d3.scale.linear()
+		.range([chartHeight, 100])
 		.domain([0, 70]);
 
 	// create x function to scale ordinal values, because x-values are month names
-	var x = d3.scale.ordinal()
-		.rangeRoundBands([0, chart_width], 0.05)
-		.domain(provincies[0].map(function(d) { return d.Misdrijf}));
+	x = d3.scale.ordinal()
+		.rangeRoundBands([0, chartWidth - 300], 0.05)
+		.domain(currentData.map(function(d) { return d.Misdrijf}));
 
 	// create x-axis based on scale and oriented at the bottom
 	var xAxis = d3.svg.axis()
@@ -170,135 +216,150 @@ function create_map(error, criminaliteit_totaal, criminaliteit_soort) {
 		.tickFormat(function(d) {return d + "%"});
 
 	// append x-axis to the chart
-	chart_svg.append("g")
+	chartSvg.append("g")
 		.attr("class", "x axis")
-		.attr("transform", "translate(0," + chart_height + ")")
+		.attr("transform", "translate(0," + chartHeight + ")")
 		.call(xAxis)
 		.selectAll("text").remove()
 
-	chart_svg.append("text")
+	// append text label to x-axis
+	chartSvg.append("text")
 		.attr("class", "label")
-		.attr("x", chart_width / 2)
+		.attr("x", (chartWidth - 300) / 2)
 		.attr("y", height - margin.bottom / 1.5) // HIER MISSCHIEN NOG AANPASSEN
 		.style("text-anchor", "middle")
 		.style("font-size", 15)
 		.text("Soort Misdrijf")
 
-
-	// append text labels as legenda
-	chart_svg.append("g")
+	// append y-axis with text label to chart
+	chartSvg.append("g")
 		.attr("class", "y axis")
 		.call(yAxis)
 		.append("text")
 		.attr("class", "label")
 		.attr("transform", "rotate(-90)")
-		.attr("x", 0)
+		.attr("x", -100)
 		.attr("y", - margin.left / 1.2)
 		.attr("dy", ".71em")
 		.style("text-anchor", "end")
 		.text("Percentage van totaal");
 
 	// calculate barwidth, based on width and amount of bars 
-	var barWidth = chart_width / 12
+	var barWidth = chartWidth / currentData.length
 
-	var chart_tip = d3.tip()
-		.attr("class", "chart_tip")
+	var chartTip = d3.tip()
+		.attr("id", "chartTip")
+		.attr("class", "tip")
 		.offset([-10, 0])
 		.html(function(d) {
-			return "<text style = 'color:black'>"+ d.Misdrijf +": " + d.GeregistreerdeMisdrijvenRelatief_2 + "%</text>";
+			return "<text>"+ d.Misdrijf +": " + d.GeregistreerdeMisdrijvenRelatief_2 + "%</text>";
 		})
 
-	chart_svg.call(chart_tip)
+	chartSvg.call(chartTip)
 
-	current_data = provincies[6];
-
-	chart_svg.selectAll("#legendaColors")
-		.data(current_data)
+	chartSvg.selectAll("#legendaColors")
+		.data(currentData)
 		.enter().append("rect")
 		.attr("id", "legendaColors")
 		.attr("class", "legenda")
-		.attr("x", 300)
-		.attr("y", function(d, i) {return 0 + 25 * i})
+		.attr("x", 575)
+		.attr("y", function(d, i) {return 100 + 25 * i})
 		.attr("width", 20)
 		.attr("height", 20)
-		.style("fill", function(d) {return chart_colors(d.Misdrijf)})
+		.style("fill", function(d) {return chartColors(d.Misdrijf)})
 
-	chart_svg.selectAll("#legendaText")
-		.data(current_data)
+	chartSvg.selectAll("#legendaText")
+		.data(currentData)
 		.enter().append("text")
 		.attr("id", "legendaText")
 		.attr("class", "legenda")
-		.attr("x", 325)
-		.attr("y", function(d, i) {return 12 + 25 * i})
+		.attr("x", 600)
+		.attr("y", function(d, i) {return 112 + 25 * i})
 		.attr("width", 50)
 		.attr("height", 40)
 		.text(function(d) {return d.Misdrijf})
 		.attr("text-anchor", "start")
 
+	chartSvg.append("text")
+		.attr("id", "chartName")
+		.attr("x", (chartWidth - 300) / 2)
+		.attr("y", chartHeight / 3)
+		.text(currentData[0].Provincie)
+
 	// create bar (rect) for each datapoint with corresponding scaled height
-	var bar = chart_svg.selectAll(".bar")
-		.data(current_data).enter()
+	var bar = chartSvg.selectAll(".bar")
+		.data(currentData).enter()
 		.append("rect")
-		.attr("class", function(d, i) {return "bar" + i})
+		.attr("class", function(d, i) {return "bar"})
+		.attr("id", function(d) {return d.Misdrijf.replace(/ /g,'')})
 		.attr("y", function(d) {return y(d.GeregistreerdeMisdrijvenRelatief_2); })
 		.attr("x", function(d) {return x(d.Misdrijf)})
-		.attr("height", function(d) {return chart_height - y(d.GeregistreerdeMisdrijvenRelatief_2); })
+		.attr("height", function(d) {return chartHeight - y(d.GeregistreerdeMisdrijvenRelatief_2)})
 		.attr("width", x.rangeBand())
-		.style("fill", function(d) {return chart_colors(d.Misdrijf)})
+		.style("fill", function(d) {return chartColors(d.Misdrijf)})
 		.on("mouseover", function(d) {
-			chart_tip.show(d)
+			chartTip.show(d)
 			d3.select(this).style("opacity", 0.7)
 		})
 		.on("mouseout", function(d) {
-			chart_tip.hide(d, i)
+			chartTip.hide(d, i)
 			d3.select(this).style("opacity", 1)
 		});
-
-
 }
 
-function click_event(location) {
+function clickEvent(location) {
 	if (location == "Groningen") {
-		current_data = provincies[0];
+		currentData = provinces[0];
 	}
 	else if (location == "Friesland"){
-		current_data = provincies[1];
+		currentData = provinces[1];
 	}
 	else if (location == "Drenthe"){
-		current_data = provincies[2];
+		currentData = provinces[2];
 	}
 	else if (location == "Overijssel"){
-		current_data = provincies[3];
+		currentData = provinces[3];
 	}
 	else if (location == "Flevoland"){
-		current_data = provincies[4];
+		currentData = provinces[4];
 	}
 	else if (location == "Gelderland"){
-		current_data = provincies[5];
+		currentData = provinces[5];
 	}
 	else if (location == "Utrecht"){
-		current_data = provincies[6];
+		currentData = provinces[6];
 	}
 	else if (location == "Noord-Holland") {
-		current_data = provincies[7];
+		currentData = provinces[7];
 	}
 	else if (location == "Zuid-Holland") {
-		currentData = provincies[8];
+		currentData = provinces[8];
 	}
 	else if (location == "Noord-Brabant") {
-		currentData = provincies[9];
+		currentData = provinces[9];
 	}
 	else if (location == "Limburg"){
-		current_data = provincies[10];
+		currentData = provinces[10];
 	}
 	else {
-		current_data = provincies[11];
+		currentData = provinces[11];
 	};
 
-	var transition = chart_svg.transition().duration(750), 
-		delay = function(d, i) { return i * 50};
+	console.log(currentData)
 
-	console.log(current_data)
+	var bars = chartSvg.selectAll(".bar")
+		.data(currentData)
+
+	// bars.exit().remove()
+	// bars.enter().append("rect")
+
+	bars.transition()
+		.duration(750)
+		.attr("y", function(d) {return y(d.GeregistreerdeMisdrijvenRelatief_2); })
+		.attr("height", function(d) {return chartHeight - y(d.GeregistreerdeMisdrijvenRelatief_2)})
+
+	chartSvg.select("#chartName")
+		.text(currentData[0].Provincie)
 } 
 
 
