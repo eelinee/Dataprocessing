@@ -2,8 +2,7 @@
 Studentnumber: 10811834
 
 'storytelling.html'
-This script creates the html attributes used in 'linked.js' to create two data
- visualisations. -->
+This script creates the html attributes for the subpage 'Over de data' on 'linked.html' -->
 
 <!DOCTYPE html>
 <html>
@@ -16,13 +15,7 @@ This script creates the html attributes used in 'linked.js' to create two data
 
 		<!-- Latest compiled JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src="linked.js"></script>
-		<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-		<script src="https://d3js.org/d3-queue.v3.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="myStyle.css">
-		<script src="https://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js">
-		</script>
-		<script src="https://d3js.org/topojson.v1.min.js"></script>
 	</head>
 	<body>
 		<nav class = "navbar navbar-default">
@@ -37,42 +30,46 @@ This script creates the html attributes used in 'linked.js' to create two data
 				</ul>
 			</div>
 		</nav>
+
 		<div class = "dataText">
-			<h3>Waarom deze visualisatie?</h3>
-			<p>
-				Nederland bestaat uit 12 provincies. Ondanks dat Nederland een erg klein 
-				land is, verschillen deze provincies van elkaar op verschillende punten 
-				zoals <a href = "https://opendata.cbs.
-				nl/#/CBS/nl/dataset/37230ned/table?ts=1513295855367">bevolkingsdichtheid,
-				</a><a href = "https://opendata.cbs.
-				nl/#/CBS/nl/dataset/37296ned/table?ts=1513295980176">gemiddelde leeftijd
-				</a> en, zoals op deze website te zien is, aantal misdrijven per 1000 
-				inwoners in het jaar 2015.
-			</p>
-			<p>
-				Op de kaart van Nederland is duidelijk te zien dat vooral in de randstad 
-				criminaliteit veel plaatsvindt. Maar naast het aantal misdrijven per jaar, 
-				is het ook interessant om te weten welke soort misdrijven daarvan deel 
-				uitmaken. Zodra je op een provincie in Nederland klikt, zie je in de 
-				grafiek aan de rechterkant het percentage van soorten misdrijven dat er in 
-				die provincie plaatsvonden in het jaar 2015.
-			</p>
-			<p>
-				Op deze manier kunnen we zien of bepaalde vooroordelen die we 
-				wellicht hebben over criminaliteit in bepaalde provincies 
-				in Nederland inderdaad waar zijn, of juist niet.
-			</p>
-			<p>
-				Zo is het bijvoorbeeld interessant om te zien dat in Noord-Holland 
-				en Utrecht een erg groot deel van de misdrijven bestond uit 
-				 vermogensmisdrijven, terwijl het percentage drugsmisdrijven in die provincies ten op zichte van de rest van 
-				Nederland niet anders is. Dit is misschien iets wat men in eerste
-				instantie niet zou denken.
-			</p>
-			<p>
-				Veel plezier met de visualisatie en help alle vooroordelen 
-				Nederland uit!
-			</p>
+			<ul style = "list-style-type:none">
+				<h4>Over de data</h4>
+				<li>
+					Nederland bestaat uit 12 provincies. Ondanks dat Nederland 
+					een erg klein land is, verschillen deze provincies van 
+					elkaar op verschillende punten zoals <a href = "https://opendata.cbs.
+					nl/#/CBS/nl/dataset/37230ned/table?ts=1513295855367">
+					bevolkingsdichtheid,</a><a href = "https://opendata.cbs.nl/#/CBS/nl/dataset/37296ned/table?ts=1513295980176">
+					gemiddelde leeftijd</a> en, zoals op deze website te zien 
+					is, aantal misdrijven per 1000 inwoners in het jaar 2015.
+				</li>
+				<li>
+					Op de kaart van Nederland is duidelijk te zien dat vooral 
+					in de randstad criminaliteit veel plaatsvindt. Maar naast 
+					het aantal misdrijven per jaar, is het ook interessant om 
+					te weten welke soort misdrijven daarvan deel uitmaken. Zodra 
+					je op een provincie in Nederland klikt, zie je in de grafiek 
+					aan de rechterkant het percentage van soorten misdrijven dat 
+					er in die provincie plaatsvonden in het jaar 2015.
+				</li>
+				<li>
+					Op deze manier kunnen we zien of bepaalde vooroordelen die we 
+					wellicht hebben over criminaliteit in bepaalde provincies 
+					in Nederland inderdaad waar zijn, of juist niet.
+				</li>
+				<li>
+					Zo is het bijvoorbeeld interessant om te zien dat in Noord-Holland 
+					en Utrecht een erg groot deel van de misdrijven bestond uit 
+					vermogensmisdrijven, terwijl het percentage drugsmisdrijven 
+					in die provincies ten op zichte van de rest van 
+					Nederland niet anders is. Dit is misschien iets wat men in eerste
+					instantie niet zou denken.
+				</li>
+				<li>
+					Veel plezier met de visualisatie en help alle vooroordelen 
+					Nederland uit!
+				</li>
+			</ul>
 		</div>
 	</body>
 </html>
